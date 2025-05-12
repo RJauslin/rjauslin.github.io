@@ -5,25 +5,19 @@ type: pages
 permalink: /about/
 ---
 
-Hi,
+Hello there! 👋
 
-My name is Raphaël Jauslin.  I currently do a PhD thesis at the University of Neuchâtel under the supervision of the Professor Yves Tillé.
+I'm Raphaël Jauslin, a methodological statistics specialist at the Swiss Federal Statistical Office. I design and implement advanced statistical methods and develop programs for data analysis and visualization. With extensive experience in R, SAS, and Python — and leveraging C++ to optimize performance — I focus on delivering efficient, scalable solutions that balance computational cost and precision.
 
-## Research
+## Academic Background
 
-My research focuses on sampling theory. I mainly worked on sampling theory for spatial populations but also on methods to find a balanced sample in highly stratified populations.
+I earned my Ph.D. in Statistics from the [University of Neuchâtel](https://www.unine.ch/) and completed my MSc in Applied Mathematics at the [École Polytechnique Fédérale de Lausanne](https://www.epfl.ch/education/master/programs/applied-mathematics/). These academic milestones have not only deepened my analytical expertise but also fueled my passion for research and innovation.
 
-The methods we have developed are available in two R packages. The packages are [WaveSampling](https://cran.r-project.org/web/packages/WaveSampling/) and [StratifiedSampling](https://cran.r-project.org/web/packages/StratifiedSampling/). You can see recent posts for examples of how to use the functions in the packages.
+## Research & Contributions
 
-<!-- * [Wave]({% post_url 2021-10-19-wave %}) -->
+My research primarily centers on sampling theory, especially for spatial populations, along with developing methods for creating balanced samples in highly stratified settings. This work has materialized in two R packages: [WaveSampling](https://cran.r-project.org/web/packages/WaveSampling/) and [StratifiedSampling](https://cran.r-project.org/web/packages/StratifiedSampling/). For detailed examples of their application, please check out my recent posts. You can also download the latest versions directly from my [GitHub page](https://github.com/RJauslin).
 
-You can also download the latest versions of the packages from my github page.
+## Beyond the Numbers
 
-## Studies
-
-I did my MSc in applied mathematics at the [Ecole polytechnique fédérale de Lausanne]( https://www.epfl.ch/education/master/programs/applied-mathematics/). 
-
-## Hobbies
-
-In my free time, I like to run in the mountain or windfoil on Neuchâtel's lake.
+Outside the realm of statistics, I enjoy staying active and connecting with nature. Whether it’s running along scenic mountain trails or windfoiling on Neuchâtel's lake 🏄‍♂️.
 

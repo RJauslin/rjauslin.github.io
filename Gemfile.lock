@@ -27,8 +27,8 @@ GEM
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.0)
-    ffi (1.15.5-x64-mingw-ucrt)
     ffi (1.15.5-x64-mingw32)
+    ffi (1.15.5-x64-unknown)
     forwardable-extended (2.6.0)
     gemoji (3.0.1)
     github-pages (226)
@@ -262,8 +262,8 @@ GEM
     webrick (1.7.0)
 
 PLATFORMS
-  x64-mingw-ucrt
   x64-mingw32
+  x64-unknown
 
 DEPENDENCIES
   github-pages (~> 226)
@@ -277,4 +277,4 @@ DEPENDENCIES
   webrick (~> 1.7.0)
 
 BUNDLED WITH
-   2.3.17
+   2.5.23
