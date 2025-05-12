@@ -296,11 +296,13 @@
         
         <h2 id="introduction">Introduction</h2>
 
-<p>The Deville systematic design is a sampling design developed in 1998 by Jean-Claude Deville. The method has similarities with the systematic design but has different properties. <a href="https://doi.org/10.3150/11-BEJ380">Chauvet (2012)</a> has shown that Deville systematic and ordered pivotal method are in fact the same underlying sampling design. This vignette shows how to use the functions <code class="language-plaintext highlighter-rouge">sys_deville</code> and <code class="language-plaintext highlighter-rouge">sys_devillepi2</code>. A small simulation is also computed to see that the second order inclusion probabilities are effectively the same as the function <code class="language-plaintext highlighter-rouge">spm</code> of the package BalancedSampling that compute the ordered pivotal method.</p>
+<p>The Deville systematic design is a sampling method developed in 1998 by Jean-Claude Deville. While it shares similarities with systematic sampling, it has distinct properties. <a href="https://doi.org/10.3150/11-BEJ380">Chauvet (2012)</a> demonstrated that Deville systematic sampling and the ordered pivotal method are actually the same underlying sampling design.</p>
 
-<h2 id="generate-data">Generate data</h2>
+<p>This vignette explains how to use the functions <code class="language-plaintext highlighter-rouge">sys_deville</code> and <code class="language-plaintext highlighter-rouge">sys_devillepi2</code> and includes a small simulation to verify that the second-order inclusion probabilities align with those calculated by the function <code class="language-plaintext highlighter-rouge">spm</code> from the <code class="language-plaintext highlighter-rouge">BalancedSampling</code> package, which implements the ordered pivotal method.</p>
 
-<p>Inclusion probabilities are generated unequal and proportional to a random uniform variable.</p>
+<h2 id="generating-data">Generating Data</h2>
+
+<p>Inclusion probabilities are generated unequally and are proportional to a random uniform variable.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">sampling</span><span class="p">)</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">StratifiedSampling</span><span class="p">)</span><span class="w">
@@ -313,7 +315,7 @@
 
 <h2 id="simulations">Simulations</h2>
 
-<p>To see if the function indeed computes the correct second-order inclusion probabilities, we perform a large number of simulations to estimate the second-order inclusion probability matrix.</p>
+<p>To verify whether the function correctly computes second-order inclusion probabilities, we perform a large number of simulations to estimate the second-order inclusion probability matrix.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">SIM</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">100000</span><span class="w">
 </span><span class="n">PI_1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">  </span><span class="n">PI_2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">  </span><span class="n">matrix</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">N</span><span class="o">*</span><span class="n">N</span><span class="p">),</span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="n">nrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="p">)</span><span class="w">
@@ -342,6 +344,8 @@
 
 <h2 id="results">Results</h2>
 
+<p>We visualize and compare the second-order inclusion probability matrices.</p>
+
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">PI_1_sp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as</span><span class="p">(</span><span class="n">as.matrix</span><span class="p">(</span><span class="n">PI_1</span><span class="p">),</span><span class="s2">"sparseMatrix"</span><span class="p">)</span><span class="w">
 </span><span class="n">PI_2_sp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as</span><span class="p">(</span><span class="n">as.matrix</span><span class="p">(</span><span class="n">PI_2</span><span class="p">),</span><span class="s2">"sparseMatrix"</span><span class="p">)</span><span class="w">
 </span><span class="n">PI_sp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as</span><span class="p">(</span><span class="n">as.matrix</span><span class="p">(</span><span class="n">PI</span><span class="p">),</span><span class="s2">"sparseMatrix"</span><span class="p">)</span><span class="w">
@@ -357,6 +361,10 @@
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">image</span><span class="p">(</span><span class="n">PI_sp</span><span class="p">)</span></code></pre></figure>
 
 <p><img src="/figs/sysDev/unnamed-chunk-4-3.png" alt="center" /></p>
+
+<h2 id="accuracy-test">Accuracy test</h2>
+
+<p>To test accuracy, we verify that the estimated probabilities closely match the expected values.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># proportional test, these values should be approximately to 0.95</span><span class="w">
 </span><span class="nf">length</span><span class="p">(</span><span class="w"> </span><span class="n">which</span><span class="p">(</span><span class="nf">abs</span><span class="p">((</span><span class="n">PI_1_sp</span><span class="o">@</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">PI_sp</span><span class="o">@</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">PI_sp</span><span class="o">@</span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">PI_sp</span><span class="o">@</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">SIM</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">1.96</span><span class="p">))</span><span class="o">/</span><span class="nf">length</span><span class="p">(</span><span class="n">PI_sp</span><span class="o">@</span><span class="n">x</span><span class="p">)</span></code></pre></figure>

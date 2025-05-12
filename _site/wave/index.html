@@ -222,11 +222,17 @@
       <section class="page__content e-content" itemprop="text">
         
         <h2 id="introduction">Introduction</h2>
-<p>Geographical data are generally auto-correlated. This is why it is preferable to avoid the measurement of neighboring units. We propose a new method for selecting spread samples from a finite spatial population with equal or unequal inclusion probabilities. The proposed method is called <code class="language-plaintext highlighter-rouge">wave</code> and stands for Weakly Associated Vectors. It is based on the definition of the contiguity structure by using a very dense stratification. The method satisfies exactly the inclusion probabilities and provides samples that are very well spread. This document propose an introduction to understand how to use the function <code class="language-plaintext highlighter-rouge">wave()</code>.</p>
 
-<h2 id="data-generation">Data generation</h2>
+<p>Geographical data are generally auto-correlated, making it preferable to avoid sampling neighboring units. We introduce a new method for selecting well-spread samples from a finite spatial population with equal or unequal inclusion probabilities. The proposed method, called <code class="language-plaintext highlighter-rouge">wave</code> (Weakly Associated Vectors), defines the contiguity structure using dense stratification. This method precisely satisfies inclusion probabilities while providing well-spread samples. This document serves as an introduction to using the <code class="language-plaintext highlighter-rouge">wave()</code> function.</p>
 
-<p>We use the data set <code class="language-plaintext highlighter-rouge">meuse</code> from the package <code class="language-plaintext highlighter-rouge">sp</code>, describe by the following statement. <em>This data set gives locations and topsoil heavy metal concentrations, along with a number of soil and landscape variables at the observation locations, collected in a flood plain of the river Meuse, near the village of Stein (NL)</em>. As it is explained by  <a href="https://doi.org/10.1002/env.2194">Grafström and Tillé (2013)</a>, we proposed to generate the inclusion probabilities proportional to the copper concentration, a variable that have a strong spatial correlation.</p>
+<h2 id="data-generation">Data Generation</h2>
+
+<p>We use the <code class="language-plaintext highlighter-rouge">meuse</code> dataset from the <code class="language-plaintext highlighter-rouge">sp</code> package, described as follows:</p>
+<blockquote>
+  <p><em>This dataset provides locations and topsoil heavy metal concentrations, along with various soil and landscape variables recorded at observation locations in a floodplain of the river Meuse, near Stein (NL).</em></p>
+</blockquote>
+
+<p>As explained by <a href="https://doi.org/10.1002/env.2194">Grafström and Tillé (2013)</a>, we generate inclusion probabilities proportional to copper concentration, a highly spatially correlated variable.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">sf</span><span class="p">)</span><span class="w">
@@ -242,11 +248,15 @@
 
 <h2 id="sample-selection">Sample selection</h2>
 
-<p>The sample selection is easily performed by the function <code class="language-plaintext highlighter-rouge">wave()</code>.</p>
+<p>We perform sample selection easily using the <code class="language-plaintext highlighter-rouge">wave()</code> function.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">s</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wave</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pik</span><span class="p">)</span><span class="w">
 </span><span class="nf">sum</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w">
 </span><span class="c1">#&gt; [1] 30</span></code></pre></figure>
+
+<h2 id="data-visualization">Data visualization</h2>
+
+<p>The selected sample is visualized using <code class="language-plaintext highlighter-rouge">ggplot2</code>.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
 </span><span class="n">p</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ggplot</span><span class="p">()</span><span class="o">+</span><span class="w">

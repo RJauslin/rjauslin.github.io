@@ -296,10 +296,11 @@
         
         <h2 id="introduction">Introduction</h2>
 
-<p>In this vignette we are going to explain how to use the function <code class="language-plaintext highlighter-rouge">balseq</code> to select a balanced sample. To have more details on the method: <a href="https://doi.org/10.48550/arXiv.2112.01164">arXiv.2112.01164</a>.</p>
+<p>Balanced sampling plays a crucial role in applied statistics. In this vignette, we explain how to use the <code class="language-plaintext highlighter-rouge">balseq</code> function to select a balanced and spatially distributed sample. For a detailed explanation of the method, refer to <a href="https://doi.org/10.1002/env.2776">doi:10.1002/env.2776</a>.</p>
 
-<h2 id="load-data">Load data</h2>
-<p>We will use the dataset <code class="language-plaintext highlighter-rouge">belgianmunicipalties</code> from the package <code class="language-plaintext highlighter-rouge">sampling</code>. The dataset does not contains any spatial coordinates. Luckily, a <code class="language-plaintext highlighter-rouge">GEOjson</code> is directly available from the <a href="https://hub.arcgis.com/datasets/esribeluxdata::belgium-municipalities-1/about">https://hub.arcgis.com/datasets/esribeluxdata::belgium-municipalities-1/about</a>. We can then transform it into a <code class="language-plaintext highlighter-rouge">sf</code> object and calculate the centroid of the municipalities. We will use these centroid as spatial coordinates to spread the sample over the space.</p>
+<h2 id="loading-data">Loading Data</h2>
+
+<p>We will use the <code class="language-plaintext highlighter-rouge">belgianmunicipalities</code> dataset from the <code class="language-plaintext highlighter-rouge">sampling</code> package, which does not contain spatial coordinates. Fortunately, a <code class="language-plaintext highlighter-rouge">GEOjson</code> file is available on <a href="https://hub.arcgis.com/datasets/esribeluxdata::belgium-municipalities-1/about">ArcGIS Hub</a>. We transform it into an <code class="language-plaintext highlighter-rouge">sf</code> object and compute the municipalities’ centroids to distribute the sample across space.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># to load data</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">sampling</span><span class="p">)</span><span class="w">
@@ -352,7 +353,9 @@
 #&gt; 5        20739 4.488162 51.19138 MULTIPOLYGON (((4.509002 51...
 #&gt; 6        21523 4.500281 51.30940 MULTIPOLYGON (((4.540815 51...</code></pre></figure>
 
-<p>A <code class="language-plaintext highlighter-rouge">sf</code> object can be directly plotted using the function <code class="language-plaintext highlighter-rouge">geom_sf</code> from the package <code class="language-plaintext highlighter-rouge">ggplot2</code>.</p>
+<h2 id="data-visualization">Data visualization</h2>
+
+<p>We visualize Belgian municipalities with their average income using ggplot2.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">p</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ggplot</span><span class="p">()</span><span class="o">+</span><span class="w">
   </span><span class="n">geom_sf</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Belgium</span><span class="p">,</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">averageincome</span><span class="p">),</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">)</span><span class="o">+</span><span class="w">
@@ -363,7 +366,7 @@
 
 <h2 id="inclusion-probabilites">Inclusion probabilites</h2>
 
-<p>Firstly, we define the variable of interest, the auxiliary variables and the inclusion probabilities. We set up here the inclusion probabilities equal with sum equal to 50. i.e. the sample will contain 50 units.</p>
+<p>A good sample should maintain the population’s characteristics. By defining proportional inclusion probabilities, we ensure better representativity. We set up here the inclusion probabilities equal with sum equal to 50. i.e. the sample will contain 50 units.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">N</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">nrow</span><span class="p">(</span><span class="n">Belgium</span><span class="p">)</span><span class="w"> </span><span class="c1"># population total</span><span class="w">
 </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="c1"># sample size</span><span class="w">
@@ -387,7 +390,7 @@
 
 <h2 id="balanced-sampling">Balanced sampling</h2>
 
-<p>We can now load the package <code class="language-plaintext highlighter-rouge">StratifiedSampling</code> and use the function <code class="language-plaintext highlighter-rouge">balseq</code> on the variables that we just defined. We can check that our method is selecting effectively a balanced sample by observing if the auxiliary totals are respected compared to a maximal entropy design (also know as conditional Poisson sampling).</p>
+<p>We compare balanced sampling <code class="language-plaintext highlighter-rouge">balseq</code> with two other methods:  <code class="language-plaintext highlighter-rouge">samplecube</code> and simple random sampling <code class="language-plaintext highlighter-rouge">srswor</code>. The percentage deviation from auxiliary totals helps evaluate the balance quality.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">StratifiedSampling</span><span class="p">)</span><span class="w">
 
@@ -419,7 +422,7 @@
 
 <h2 id="spread-sampling">Spread sampling</h2>
 
-<p>To add the spatial component, we can simply add the spatial coordinates as a matrix to the argument <code class="language-plaintext highlighter-rouge">Xspread</code> of the function. Here <code class="language-plaintext highlighter-rouge">coord</code> is an output of the function <code class="language-plaintext highlighter-rouge">gCentroid</code> which is by construction an <code class="language-plaintext highlighter-rouge">S4</code> object. To get the <code class="language-plaintext highlighter-rouge">data.frame</code> that are encapsulated inside, we simply use the <code class="language-plaintext highlighter-rouge">@coords</code> operator.</p>
+<p>To incorporate spatial distribution, we use geographic coordinates as a matrix to the argument <code class="language-plaintext highlighter-rouge">Xspread</code> of the function. Here <code class="language-plaintext highlighter-rouge">coord</code> is an output of the function <code class="language-plaintext highlighter-rouge">gCentroid</code> which is by construction an <code class="language-plaintext highlighter-rouge">S4</code> object. To get the <code class="language-plaintext highlighter-rouge">data.frame</code> that are encapsulated inside, we simply use the <code class="language-plaintext highlighter-rouge">@coords</code> operator.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">s</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">  </span><span class="n">balseq</span><span class="p">(</span><span class="n">pik</span><span class="p">,</span><span class="w">
              </span><span class="n">Xaux</span><span class="p">,</span><span class="w">

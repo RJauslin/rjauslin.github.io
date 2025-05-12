@@ -12,11 +12,11 @@ excerpt: Example of sequential spatially balanced sampling.
 
 ## Introduction
 
+Balanced sampling plays a crucial role in applied statistics. In this vignette, we explain how to use the `balseq` function to select a balanced and spatially distributed sample. For a detailed explanation of the method, refer to [doi:10.1002/env.2776](https://doi.org/10.1002/env.2776).
 
-In this vignette we are going to explain how to use the function `balseq` to select a balanced sample. To have more details on the method: [arXiv.2112.01164](https://doi.org/10.48550/arXiv.2112.01164).
+## Loading Data
 
-## Load data
-We will use the dataset `belgianmunicipalties` from the package `sampling`. The dataset does not contains any spatial coordinates. Luckily, a `GEOjson` is directly available from the [https://hub.arcgis.com/datasets/esribeluxdata::belgium-municipalities-1/about](https://hub.arcgis.com/datasets/esribeluxdata::belgium-municipalities-1/about). We can then transform it into a `sf` object and calculate the centroid of the municipalities. We will use these centroid as spatial coordinates to spread the sample over the space.
+We will use the `belgianmunicipalities` dataset from the `sampling` package, which does not contain spatial coordinates. Fortunately, a `GEOjson` file is available on [ArcGIS Hub](https://hub.arcgis.com/datasets/esribeluxdata::belgium-municipalities-1/about). We transform it into an `sf` object and compute the municipalities' centroids to distribute the sample across space.
 
 
 {% highlight r %}
@@ -76,8 +76,9 @@ head(Belgium)
 #> 6        21523 4.500281 51.30940 MULTIPOLYGON (((4.540815 51...
 {% endhighlight %}
 
-A `sf` object can be directly plotted using the function `geom_sf` from the package `ggplot2`.
+## Data visualization
 
+We visualize Belgian municipalities with their average income using ggplot2.
 
 {% highlight r %}
 p <- ggplot()+
@@ -90,7 +91,7 @@ p
 
 ## Inclusion probabilites
 
-Firstly, we define the variable of interest, the auxiliary variables and the inclusion probabilities. We set up here the inclusion probabilities equal with sum equal to 50. i.e. the sample will contain 50 units.
+A good sample should maintain the population's characteristics. By defining proportional inclusion probabilities, we ensure better representativity. We set up here the inclusion probabilities equal with sum equal to 50. i.e. the sample will contain 50 units.
 
 
 
@@ -120,7 +121,7 @@ Xspread <- coord
 
 ## Balanced sampling
 
-We can now load the package `StratifiedSampling` and use the function `balseq` on the variables that we just defined. We can check that our method is selecting effectively a balanced sample by observing if the auxiliary totals are respected compared to a maximal entropy design (also know as conditional Poisson sampling). 
+We compare balanced sampling `balseq` with two other methods:  `samplecube` and simple random sampling `srswor`. The percentage deviation from auxiliary totals helps evaluate the balance quality.
 
 
 {% highlight r %}
@@ -177,7 +178,7 @@ EST3 <- colSums(Xaux[s_srs == 1,]/pik[s_srs == 1])
 
 ## Spread sampling
 
-To add the spatial component, we can simply add the spatial coordinates as a matrix to the argument `Xspread` of the function. Here `coord` is an output of the function `gCentroid` which is by construction an `S4` object. To get the `data.frame` that are encapsulated inside, we simply use the `@coords` operator.
+To incorporate spatial distribution, we use geographic coordinates as a matrix to the argument `Xspread` of the function. Here `coord` is an output of the function `gCentroid` which is by construction an `S4` object. To get the `data.frame` that are encapsulated inside, we simply use the `@coords` operator.
 
 
 {% highlight r %}

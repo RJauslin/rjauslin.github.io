@@ -9,13 +9,14 @@ excerpt: Example of statistical matching using optimal transport.
 # classes: wide
 ---
 
+## Introduction  
 
-## Introduction
+In this vignette, we explore how key functions from the package can be used to estimate a contingency table. Our analysis is based on the `eusilc` dataset from the `laeken` package. Each function discussed here is thoroughly explained in the manuscript by Raphaël Jauslin and Yves Tillé (2021), available on [doi:10.1016/j.jspi.2022.12.003](https://doi.org/10.1016/j.jspi.2022.12.003).  
 
-In this vignette, we will explain how some functions of the package are used to estimate a contingency table. We will work on the `eusilc` dataset of the `laeken` package. All the functions presented in the following are explained in the proposed manuscript by Raphaël Jauslin and Yves Tillé (2021) [arXiv:2105.08379](https://arxiv.org/abs/2105.08379).
+## Contingency Table  
 
-## Contingency table
-We will estimate the contingency table when the factor variable which represents the economic status `pl030` is crossed with a discretized version of the equivalized household income `eqIncome`. To discretize the equivalized income, we calculate percentiles (0.15,0.30,0.45,0.60,0.75,0.90) of the variable and define the category as intervals between the values.
+To construct the contingency table, we examine the factor variable `pl030`, which represents economic status, in combination with a discretized version of the equivalized household income, `eqIncome`. The discretization process involves calculating specific percentiles (0.15, 0.30, 0.45, 0.60, 0.75, 0.90) of `eqIncome` and defining categorical intervals based on these values.  
+
  
 
 {% highlight r %}
