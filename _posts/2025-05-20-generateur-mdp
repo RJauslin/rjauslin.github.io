@@ -1,9 +1,13 @@
 ---
-layout: post
+layout: single
 title: "Générateur de mot de passe"
-date: 2025-05-20
-categories: [outil, sécurité]
+author: "Raphaël Jauslin"
+date: "2025-05-20"
+output: html_document
+permalink: /mdp/
+excerpt: Password generator
 ---
+
 
 <div style="position: relative; padding-bottom: 65%; height: 0; overflow: hidden;">
   <iframe 
